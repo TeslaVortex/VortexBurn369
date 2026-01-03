@@ -1,55 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { connectMetaMask, isMetaMaskConnected } from '../services/metamask';
+import React, { useState } from 'react';
+import { connectMetaMask } from '../services/metamask';
 
-function Login({ onLogin }: { onLogin: () => void }) {
+interface LoginProps {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
+
+function Login({ setIsLoggedIn }: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [metaMaskAddress, setMetaMaskAddress] = useState<string | null>(null);
-  const [metaMaskBalance, setMetaMaskBalance] = useState<string | null>(null);
-  const [metaMaskError, setMetaMaskError] = useState<string | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState<string | null>(null);
 
-  useEffect(() => {
-    const checkMetaMask = async () => {
-      if (await isMetaMaskConnected()) {
-        try {
-          const { address, balance } = await connectMetaMask();
-          setMetaMaskAddress(address);
-          setMetaMaskBalance(balance);
-          onLogin(); // Automatically log in if MetaMask is connected
-        } catch (err) {
-          setMetaMaskError('Failed to connect to MetaMask');
-        }
-      }
-    };
-    checkMetaMask();
-  }, [onLogin]);
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for actual login logic
-    console.log('Login attempt with:', { email, password });
-    alert('Login functionality will be implemented later.');
-    onLogin(); // Call the onLogin function to simulate login
+    // Placeholder for email login logic
+    setIsLoggedIn(true);
   };
 
   const handleMetaMaskConnect = async () => {
     try {
-      setMetaMaskError(null);
       const { address, balance } = await connectMetaMask();
-      setMetaMaskAddress(address);
-      setMetaMaskBalance(balance);
-      onLogin(); // Log in after successful MetaMask connection
-    } catch (err) {
-      setMetaMaskError('Failed to connect to MetaMask. Please ensure MetaMask is installed and unlocked.');
-      console.error(err);
+      setWalletAddress(address);
+      setBalance(balance);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('MetaMask connection failed:', error);
+      alert('Failed to connect MetaMask. Please try again.');
     }
   };
 
@@ -57,15 +33,9 @@ function Login({ onLogin }: { onLogin: () => void }) {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account 💻</h2>
-          {metaMaskAddress && (
-            <p className="mt-2 text-center text-sm text-green-600">Connected to MetaMask: {metaMaskAddress.slice(0, 6)}...{metaMaskAddress.slice(-4)} (Balance: {metaMaskBalance} ETH)</p>
-          )}
-          {metaMaskError && (
-            <p className="mt-2 text-center text-sm text-red-600">{metaMaskError}</p>
-          )}
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleEmailLogin}>
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -79,9 +49,9 @@ function Login({ onLogin }: { onLogin: () => void }) {
                 autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address ✉️"
+                placeholder="Email address"
                 value={email}
-                onChange={handleEmailChange}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -95,9 +65,9 @@ function Login({ onLogin }: { onLogin: () => void }) {
                 autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password 🔒"
+                placeholder="Password"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
@@ -107,20 +77,24 @@ function Login({ onLogin }: { onLogin: () => void }) {
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign in 🚀
-            </button>
-          </div>
-
-          <div className="text-sm text-center">
-            <button
-              type="button"
-              onClick={handleMetaMaskConnect}
-              className="mt-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-            >
-              Connect MetaMask 🦊
+              Sign in with Email
             </button>
           </div>
         </form>
+        <div className="mt-4">
+          <button
+            onClick={handleMetaMaskConnect}
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Connect with MetaMask
+          </button>
+          {walletAddress && (
+            <div className="mt-2 text-center text-sm text-gray-600">
+              <p>Connected Wallet: {walletAddress}</p>
+              <p>Balance: {balance} ETH</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,22 @@
-import { ethers } from 'ethers';
+import { BrowserProvider, formatEther } from 'ethers';
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 // Function to connect to MetaMask
 export const connectMetaMask = async () => {
   if (window.ethereum) {
     try {
       // Request account access
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const provider = new BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
       const address = await signer.getAddress();
       const balance = await provider.getBalance(address);
-      const formattedBalance = ethers.utils.formatEther(balance);
+      const formattedBalance = formatEther(balance);
       return { address, balance: formattedBalance };
     } catch (error) {
       console.error('Error connecting to MetaMask:', error);

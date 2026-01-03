@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@web3auth/metamask-adapter": "^8.12.4",
+    "@web3auth/modal": "^10.10.0",
+    "autoprefixer": "^10.4.23",
+    "axios": "^1.13.2",
+    "chart.js": "^4.5.1",
+    "postcss": "^8.5.6",
+    "react-chartjs-2": "^5.3.1",
+    "tailwindcss": "^4.1.18",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "web3": "^4.16.0"
+  }
+}
