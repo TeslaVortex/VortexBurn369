@@ -3,12 +3,19 @@ import { getXAITip } from '../services/api';
 import SwapCard from '../components/SwapCard';
 import PriceCard from '../components/PriceCard';
 import WalletManager from '../components/WalletManager';
+import ExpenseManager from '../components/ExpenseManager';
+import BurnTracker from '../components/BurnTracker';
+import ChartsPanel from '../components/ChartsPanel';
 import { getStoredWallets } from '../services/walletManager';
+import { getTotalExpenses } from '../services/expenseTracker';
+import { getTotalBurned } from '../services/burnService';
 
 function Dashboard() {
   const [tip, setTip] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [walletCount, setWalletCount] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalBurned, setTotalBurned] = useState('0');
   const [refreshingTip, setRefreshingTip] = useState(false);
 
   const fetchTip = async () => {
@@ -22,17 +29,23 @@ function Dashboard() {
     setRefreshingTip(false);
   };
 
+  const refreshStats = () => {
+    setWalletCount(getStoredWallets().length);
+    setTotalExpenses(getTotalExpenses());
+    setTotalBurned(getTotalBurned());
+  };
+
   useEffect(() => {
     const init = async () => {
       await fetchTip();
-      setWalletCount(getStoredWallets().length);
+      refreshStats();
       setLoading(false);
     };
     init();
   }, []);
 
   const handleWalletChange = () => {
-    setWalletCount(getStoredWallets().length);
+    refreshStats();
   };
 
   if (loading) {
@@ -80,8 +93,12 @@ function Dashboard() {
                 <span className="font-bold text-gray-800">{walletCount}</span>
               </div>
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                <span className="text-gray-600">Network</span>
-                <span className="font-bold text-gray-800">Ethereum</span>
+                <span className="text-gray-600">Total Expenses</span>
+                <span className="font-bold text-red-500">${totalExpenses.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                <span className="text-gray-600">Total Burned</span>
+                <span className="font-bold text-orange-500">{totalBurned} ETH 🔥</span>
               </div>
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
                 <span className="text-gray-600">Status</span>
@@ -90,27 +107,20 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* Expense Manager */}
+          <ExpenseManager />
+
+          {/* Charts Panel */}
+          <ChartsPanel />
+
+          {/* Burn Tracker */}
+          <BurnTracker />
+
           {/* Swap Card */}
           <SwapCard />
 
           {/* Price Card */}
           <PriceCard />
-
-          {/* Coming Soon Card */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">🚀 Coming Soon</h2>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-center">
-                <span className="mr-2">📈</span> Portfolio Charts
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">🔥</span> Token Burn Tracker
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2">📊</span> Expense Categories
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
