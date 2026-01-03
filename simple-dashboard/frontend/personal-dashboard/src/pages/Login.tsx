@@ -1,8 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connectMetaMask, isMetaMaskConnected } from '../services/metamask';
 
 function Login({ onLogin }: { onLogin: () => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [metaMaskAddress, setMetaMaskAddress] = useState<string | null>(null);
+  const [metaMaskBalance, setMetaMaskBalance] = useState<string | null>(null);
+  const [metaMaskError, setMetaMaskError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const checkMetaMask = async () => {
+      if (await isMetaMaskConnected()) {
+        try {
+          const { address, balance } = await connectMetaMask();
+          setMetaMaskAddress(address);
+          setMetaMaskBalance(balance);
+          onLogin(); // Automatically log in if MetaMask is connected
+        } catch (err) {
+          setMetaMaskError('Failed to connect to MetaMask');
+        }
+      }
+    };
+    checkMetaMask();
+  }, [onLogin]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -20,11 +40,30 @@ function Login({ onLogin }: { onLogin: () => void }) {
     onLogin(); // Call the onLogin function to simulate login
   };
 
+  const handleMetaMaskConnect = async () => {
+    try {
+      setMetaMaskError(null);
+      const { address, balance } = await connectMetaMask();
+      setMetaMaskAddress(address);
+      setMetaMaskBalance(balance);
+      onLogin(); // Log in after successful MetaMask connection
+    } catch (err) {
+      setMetaMaskError('Failed to connect to MetaMask. Please ensure MetaMask is installed and unlocked.');
+      console.error(err);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account 💻</h2>
+          {metaMaskAddress && (
+            <p className="mt-2 text-center text-sm text-green-600">Connected to MetaMask: {metaMaskAddress.slice(0, 6)}...{metaMaskAddress.slice(-4)} (Balance: {metaMaskBalance} ETH)</p>
+          )}
+          {metaMaskError && (
+            <p className="mt-2 text-center text-sm text-red-600">{metaMaskError}</p>
+          )}
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
@@ -73,7 +112,13 @@ function Login({ onLogin }: { onLogin: () => void }) {
           </div>
 
           <div className="text-sm text-center">
-            <p>Or connect with MetaMask 🦊 (Coming soon!)</p>
+            <button
+              type="button"
+              onClick={handleMetaMaskConnect}
+              className="mt-2 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              Connect MetaMask 🦊
+            </button>
           </div>
         </form>
       </div>
