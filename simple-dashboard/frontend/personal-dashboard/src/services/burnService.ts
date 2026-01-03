@@ -109,7 +109,9 @@ export const executeBurn = async (amountInEther: string): Promise<string> => {
 
 // Calculate burn amount from income
 export const calculateBurnAmount = (incomeAmount: number, percentage: number = 9): string => {
-  const burnAmount = incomeAmount * (percentage / 100);
+  // Enforce minimum 9% burn
+  const validPercentage = Math.max(9, percentage);
+  const burnAmount = incomeAmount * (validPercentage / 100);
   return burnAmount.toFixed(6);
 };
 

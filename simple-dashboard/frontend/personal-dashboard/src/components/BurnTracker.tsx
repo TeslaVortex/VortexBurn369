@@ -35,7 +35,7 @@ function BurnTracker() {
   };
 
   const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(100, Math.max(0, parseInt(e.target.value) || 0));
+    const value = Math.min(100, Math.max(9, parseInt(e.target.value) || 9));
     const newSettings = { ...settings, percentage: value };
     saveBurnSettings(newSettings);
     setSettings(newSettings);
@@ -147,12 +147,12 @@ function BurnTracker() {
           <>
             <div className="mb-3">
               <label className="block text-sm text-gray-600 mb-1">
-                Burn Percentage
+                Burn Percentage (min 9%)
               </label>
               <div className="flex items-center gap-2">
                 <input
                   type="range"
-                  min="1"
+                  min="9"
                   max="50"
                   value={settings.percentage}
                   onChange={handlePercentageChange}
@@ -162,6 +162,9 @@ function BurnTracker() {
                   {settings.percentage}%
                 </span>
               </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Sacred 9% minimum for resonant frequency 🔥
+              </p>
             </div>
 
             <div>
