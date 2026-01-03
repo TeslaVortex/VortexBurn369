@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getXAITip } from '../services/api';
 import { connectMetaMask, isMetaMaskConnected } from '../services/metamask';
 import SwapCard from '../components/SwapCard';
+import PriceCard from '../components/PriceCard';
 
 interface WalletInfo {
   address: string;
@@ -148,18 +149,21 @@ function Dashboard() {
           {/* Swap Card */}
           <SwapCard />
 
+          {/* Price Card */}
+          <PriceCard />
+
           {/* Coming Soon Card */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">🚀 Coming Soon</h2>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-center">
-                <span className="mr-2">💱</span> Coinbase Connection
+                <span className="mr-2">�</span> Portfolio Charts
               </li>
               <li className="flex items-center">
-                <span className="mr-2">📈</span> Portfolio Charts
+                <span className="mr-2">�</span> Token Burn Tracker
               </li>
               <li className="flex items-center">
-                <span className="mr-2">🔥</span> Token Burn Tracker
+                <span className="mr-2">�</span> Multiple Wallets
               </li>
             </ul>
           </div>

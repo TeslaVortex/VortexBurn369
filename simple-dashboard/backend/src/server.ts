@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { getXaiTip, getBudgetTip } from './services/xai';
+import { getCryptoPrice, getMultiplePrices, getExchangeRates } from './services/coinbase';
 
 dotenv.config();
 
@@ -38,6 +39,44 @@ app.post('/api/wallets', (req, res) => {
 app.get('/api/wallets', (req, res) => {
   // TODO: Fetch from database
   res.json({ status: 'ok', wallets: [] });
+});
+
+// Coinbase - Get single crypto price
+app.get('/api/coinbase/price/:symbol', async (req, res) => {
+  try {
+    const { symbol } = req.params;
+    const currency = (req.query.currency as string) || 'USD';
+    const price = await getCryptoPrice(symbol.toUpperCase(), currency);
+    res.json({ status: 'ok', data: price });
+  } catch (error) {
+    console.error('Error fetching price:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch price' });
+  }
+});
+
+// Coinbase - Get multiple crypto prices
+app.get('/api/coinbase/prices', async (req, res) => {
+  try {
+    const symbols = ((req.query.symbols as string) || 'BTC,ETH,SOL').split(',');
+    const currency = (req.query.currency as string) || 'USD';
+    const prices = await getMultiplePrices(symbols.map(s => s.toUpperCase()), currency);
+    res.json({ status: 'ok', data: prices });
+  } catch (error) {
+    console.error('Error fetching prices:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch prices' });
+  }
+});
+
+// Coinbase - Get exchange rates
+app.get('/api/coinbase/rates', async (req, res) => {
+  try {
+    const currency = (req.query.currency as string) || 'USD';
+    const rates = await getExchangeRates(currency);
+    res.json({ status: 'ok', data: rates });
+  } catch (error) {
+    console.error('Error fetching rates:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch rates' });
+  }
 });
 
 const PORT = process.env.PORT || 5000;
