@@ -119,10 +119,10 @@ function BurnTracker() {
       <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-lg p-4 mb-4 text-white">
         <p className="text-sm opacity-80">Total Burned Forever 🔥</p>
         <p className="text-2xl font-bold">{totalBurned} ETH</p>
-        <p className="text-xs opacity-70 mt-1 font-mono truncate">
+        <p className="text-xs opacity-70 mt-1 font-mono truncate" title={getBurnAddress()}>
           → {getBurnAddress()}
         </p>
-        <p className="text-xs opacity-60 mt-1">
+        <p className="text-xs opacity-80 mt-1 font-semibold">
           {settings.resonant369Mode ? '✨ Resonant 369 Mode' : '💀 Standard Burn'}
         </p>
       </div>
