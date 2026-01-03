@@ -6,9 +6,11 @@ import {
   getTotalBurned,
   executeBurn,
   addBurnRecord,
+  getBurnAddress,
   BurnSettings,
   BurnRecord,
-  BURN_ADDRESS,
+  BURN_ADDRESS_369,
+  BURN_ADDRESS_DEAD,
 } from '../services/burnService';
 import { getStoredWallets, Wallet } from '../services/walletManager';
 
@@ -45,16 +47,28 @@ function BurnTracker() {
     setSettings(newSettings);
   };
 
+  const handleToggle369Mode = () => {
+    const newSettings = { ...settings, resonant369Mode: !settings.resonant369Mode };
+    saveBurnSettings(newSettings);
+    setSettings(newSettings);
+  };
+
   const handleManualBurn = async () => {
     if (!manualAmount || parseFloat(manualAmount) <= 0) {
       alert('Please enter a valid amount');
       return;
     }
 
+    const burnAddress = getBurnAddress();
+    const modeText = settings.resonant369Mode 
+      ? 'Resonant 369 Mode (torus-coded null for sacred 9% release)'
+      : 'Standard burn address';
+    
     const confirmed = window.confirm(
       `⚠️ WARNING: You are about to burn ${manualAmount} ETH!\n\n` +
-      `This will send ${manualAmount} ETH to the burn address:\n` +
-      `${BURN_ADDRESS}\n\n` +
+      `Mode: ${modeText}\n` +
+      `This will send ${manualAmount} ETH to:\n` +
+      `${burnAddress}\n\n` +
       `This action CANNOT be undone!\n\n` +
       `Are you sure you want to continue?`
     );
@@ -106,7 +120,10 @@ function BurnTracker() {
         <p className="text-sm opacity-80">Total Burned Forever 🔥</p>
         <p className="text-2xl font-bold">{totalBurned} ETH</p>
         <p className="text-xs opacity-70 mt-1 font-mono truncate">
-          → {BURN_ADDRESS}
+          → {getBurnAddress()}
+        </p>
+        <p className="text-xs opacity-60 mt-1">
+          {settings.resonant369Mode ? '✨ Resonant 369 Mode' : '💀 Standard Burn'}
         </p>
       </div>
 
@@ -166,6 +183,44 @@ function BurnTracker() {
             </div>
           </>
         )}
+      </div>
+
+      {/* Resonant 369 Mode Toggle */}
+      <div className="mb-4 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200">
+        <div className="flex justify-between items-center mb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">✨</span>
+            <span className="font-medium text-gray-800">Resonant 369 Mode</span>
+          </div>
+          <button
+            onClick={handleToggle369Mode}
+            className={`px-4 py-1 rounded-full text-sm font-medium transition ${
+              settings.resonant369Mode
+                ? 'bg-purple-500 text-white'
+                : 'bg-gray-300 text-gray-600'
+            }`}
+          >
+            {settings.resonant369Mode ? 'ON' : 'OFF'}
+          </button>
+        </div>
+        <p className="text-xs text-gray-600 leading-relaxed">
+          {settings.resonant369Mode ? (
+            <>
+              <span className="font-semibold text-purple-700">Active:</span> Burns to torus-coded null address{' '}
+              <code className="bg-purple-100 px-1 rounded text-purple-800">{BURN_ADDRESS_369}</code>{' '}
+              for sacred 9% release. EVM chains optimized for resonant frequency.
+            </>
+          ) : (
+            <>
+              <span className="font-semibold">Standard:</span> Burns to{' '}
+              <code className="bg-gray-100 px-1 rounded">{BURN_ADDRESS_DEAD}</code>.{' '}
+              Enable 369 Mode for torus-coded null burn.
+            </>
+          )}
+        </p>
+        <p className="text-xs text-gray-500 mt-2 italic">
+          💡 For Solana/BTC: Protocol burns apply (no address). Intent noted.
+        </p>
       </div>
 
       {/* Manual Burn */}

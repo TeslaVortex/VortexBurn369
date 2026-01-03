@@ -1,7 +1,14 @@
 import { BrowserProvider, parseEther, formatEther } from 'ethers';
 
-// Standard burn address (tokens sent here are gone forever)
-export const BURN_ADDRESS = '0x000000000000000000000000000000000000dEaD';
+// Burn addresses
+export const BURN_ADDRESS_DEAD = '0x000000000000000000000000000000000000dEaD';
+export const BURN_ADDRESS_369 = '0x0000000000000000000000000000000000000369';
+
+// Get active burn address based on 369 mode
+export const getBurnAddress = (): string => {
+  const settings = getBurnSettings();
+  return settings.resonant369Mode ? BURN_ADDRESS_369 : BURN_ADDRESS_DEAD;
+};
 
 // Burn settings stored in localStorage
 const BURN_SETTINGS_KEY = 'burn_settings';
@@ -11,6 +18,7 @@ export interface BurnSettings {
   enabled: boolean;
   percentage: number; // Default 9%
   incomeWalletId: string | null;
+  resonant369Mode: boolean; // Use torus-coded null address
 }
 
 export interface BurnRecord {
@@ -35,6 +43,7 @@ export const getBurnSettings = (): BurnSettings => {
     enabled: false,
     percentage: 9,
     incomeWalletId: null,
+    resonant369Mode: true, // Default to 369 mode
   };
 };
 
@@ -79,13 +88,15 @@ export const executeBurn = async (amountInEther: string): Promise<string> => {
 
   const provider = new BrowserProvider(window.ethereum);
   const signer = await provider.getSigner();
+  
+  const burnAddress = getBurnAddress();
 
   const tx = {
-    to: BURN_ADDRESS,
+    to: burnAddress,
     value: parseEther(amountInEther),
   };
 
-  console.log(`🔥 Burning ${amountInEther} ETH to ${BURN_ADDRESS}`);
+  console.log(`🔥 Burning ${amountInEther} ETH to ${burnAddress}`);
   
   const txResponse = await signer.sendTransaction(tx);
   console.log('Burn transaction sent:', txResponse.hash);
