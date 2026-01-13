@@ -5,6 +5,7 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 import { isMetaMaskConnected } from '../services/metamask';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { startBurnChecker, stopBurnChecker } from '../services/burnExecutor';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,6 +22,12 @@ function App() {
       setLoading(false);
     };
     checkMetaMask();
+  }, []);
+
+  // Start automatic burn checker when app loads
+  useEffect(() => {
+    const interval = startBurnChecker();
+    return () => stopBurnChecker(interval);
   }, []);
 
   useEffect(() => {

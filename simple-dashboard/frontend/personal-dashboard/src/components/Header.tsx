@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PhantomWalletButton from './PhantomWalletButton';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -25,6 +26,8 @@ function Header({ darkMode, onToggleDarkMode }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Phantom Wallet */}
+            <PhantomWalletButton />
             {/* Help Button */}
             <button
               onClick={() => setShowHelp(true)}

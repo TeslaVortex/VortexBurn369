@@ -3,8 +3,10 @@ import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
 // Solana RPC endpoint (use mainnet-beta for production)
 const SOLANA_RPC = process.env.SOLANA_RPC_URL || clusterApiUrl('mainnet-beta');
 
-// 369 Eternal Token Mint Address (placeholder - update with actual mint)
-export const TOKEN_369_MINT = '369EternalTokenMintAddressHere'; // TODO: Get actual mint address
+// 369 Eternal Token Mint Address
+// Note: This is a placeholder. Update with the actual token mint address from Raydium pool
+// Pool ID: 69Jiph4XhmJhX8LoGi97iH6G2jR8NDyGzEQDTWrNA5Lm
+export const TOKEN_369_MINT = '369EternalTokenMintAddressHere'; // TODO: Get actual mint from pool data
 
 // Create Solana connection
 export const getSolanaConnection = (): Connection => {
