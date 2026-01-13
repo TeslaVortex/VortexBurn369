@@ -1,11 +1,11 @@
-# 🔥 369 Eternal Token Integration Plan
+# 🔥 Vortex369 Talisman Token Integration Plan
 
 ## 📋 Overview
 
-Integrate **369 Eternal** token into Simple Dashboard with Raydium pool tracking and automated weekly burn scheduling.
+Integrate **Vortex369 Talisman** token into Simple Dashboard with Raydium pool tracking and automated weekly burn scheduling.
 
 **Token Details:**
-- **Name:** 369 Eternal
+- **Name:** Vortex369 Talisman
 - **Pool/Market ID:** `69Jiph4XhmJhX8LoGi97iH6G2jR8NDyGzEQDTWrNA5Lm`
 - **Platform:** Raydium (Solana DEX)
 
@@ -13,10 +13,10 @@ Integrate **369 Eternal** token into Simple Dashboard with Raydium pool tracking
 
 ## ✨ New Features
 
-### 1. 369 Eternal Token Tracker
+### 1. Vortex369 Talisman Token Tracker
 - Display token balance from connected Solana wallet
 - Show current price from Raydium pool
-- Track total 369 tokens burned
+- Track total Vortex369 tokens burned
 - Display pool liquidity and volume
 
 ### 2. Weekly Scheduled Burns

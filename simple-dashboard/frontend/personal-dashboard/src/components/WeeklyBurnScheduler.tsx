@@ -176,7 +176,7 @@ function WeeklyBurnScheduler() {
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              ✨ 369
+              ✨ V369
             </button>
             <button
               onClick={() => handleTokenTypeChange('SOL')}
@@ -237,7 +237,7 @@ function WeeklyBurnScheduler() {
         <div className="mt-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
           <p className="text-sm text-purple-800">
             <strong>📋 Schedule:</strong> Burn {settings.percentage}% of{' '}
-            {settings.tokenType === '369_ETERNAL' ? '369 Eternal' : settings.tokenType} every{' '}
+            {settings.tokenType === '369_ETERNAL' ? 'Vortex369 Talisman' : settings.tokenType} every{' '}
             {getDayName(settings.dayOfWeek)} at {settings.timeOfDay}
           </p>
         </div>

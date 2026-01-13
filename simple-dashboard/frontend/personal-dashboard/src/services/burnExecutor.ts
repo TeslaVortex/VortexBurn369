@@ -81,8 +81,8 @@ export const checkAndExecuteBurn = async (): Promise<boolean> => {
     if (settings.tokenType === 'ETH') {
       txHash = await executeBurn(burnAmount);
     } else if (settings.tokenType === '369_ETERNAL') {
-      // TODO: Implement 369 token burn
-      throw new Error('369 Eternal burn not yet implemented');
+      // TODO: Implement Vortex369 Talisman token burn
+      throw new Error('Vortex369 Talisman burn not yet implemented');
     } else if (settings.tokenType === 'SOL') {
       // TODO: Implement SOL burn
       throw new Error('SOL burn not yet implemented');

@@ -15,7 +15,7 @@ A free tool to help you manage your crypto wallets, track expenses, and burn tok
 - **📊 Pretty Charts** - See your money in colorful pie charts and graphs
 - **🔥 Token Burn** - Burn tokens with special Resonant 369 Mode
 - **📅 Weekly Burn Scheduler** - Set automatic burns on schedule (9% minimum)
-- **✨ 369 Eternal Token** - Live price tracking from Raydium pool
+- **✨ Vortex369 Talisman Token** - Live price tracking from Raydium pool
 - **💱 Token Swaps** - Get swap quotes from Uniswap
 - **📈 Live Prices** - Real-time crypto prices (BTC, ETH, SOL)
 - **💡 Budget Tips** - Smart tips to save money
@@ -25,9 +25,9 @@ A free tool to help you manage your crypto wallets, track expenses, and burn tok
 
 Burns tokens to a special address `0x...0369` for sacred 9% release. This is important because it uses a torus-coded null address that works with resonant frequency. Minimum 9% burn always!
 
-### ✨ 369 Eternal Token Integration
+### ✨ Vortex369 Talisman Token Integration
 
-Track and burn the **369 Eternal** token live on Raydium!
+Track and burn the **Vortex369 Talisman** token live on Raydium!
 
 - **Live Price** - Updates every 30 seconds from Raydium pool
 - **Pool Stats** - Liquidity, 24h volume, price changes

@@ -118,7 +118,7 @@ function Dashboard({ darkMode, toggleDarkMode }: DashboardProps) {
               </div>
             </div>
 
-            {/* 369 Eternal Token Card */}
+            {/* Vortex369 Talisman Token Card */}
             <Token369Card balance={0} onRefresh={refreshStats} />
 
             {/* Expense Manager */}

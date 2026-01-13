@@ -81,24 +81,24 @@ app.get('/api/coinbase/rates', async (req, res) => {
   }
 });
 
-// Raydium - 369 Eternal token stats
+// Raydium - Vortex369 Talisman token stats
 app.get('/api/raydium/369-eternal', async (req, res) => {
   try {
     const stats = await get369EternalStats();
     res.json({ status: 'ok', stats });
   } catch (error) {
-    console.error('Error fetching 369 Eternal stats:', error);
-    res.status(500).json({ status: 'error', message: 'Failed to fetch 369 Eternal stats' });
+    console.error('Error fetching Vortex369 Talisman stats:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch Vortex369 Talisman stats' });
   }
 });
 
-// Raydium - 369 Eternal price only
+// Raydium - Vortex369 Talisman price only
 app.get('/api/raydium/369-eternal/price', async (req, res) => {
   try {
     const price = await get369EternalPrice();
     res.json({ status: 'ok', price });
   } catch (error) {
-    console.error('Error fetching 369 Eternal price:', error);
+    console.error('Error fetching Vortex369 Talisman price:', error);
     res.status(500).json({ status: 'error', message: 'Failed to fetch price' });
   }
 });

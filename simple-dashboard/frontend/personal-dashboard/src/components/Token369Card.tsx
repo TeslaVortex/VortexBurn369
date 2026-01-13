@@ -48,7 +48,7 @@ function Token369Card({ balance = 0, onRefresh }: Token369CardProps) {
       <div className="flex justify-between items-start mb-4">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
-            ✨ 369 Eternal
+            ✨ Vortex369 Talisman
           </h2>
           <p className="text-sm opacity-80">Resonant Token</p>
         </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// 369 Eternal Token Pool ID on Raydium
+// Vortex369 Talisman Token Pool ID on Raydium
 export const TOKEN_369_POOL_ID = '69Jiph4XhmJhX8LoGi97iH6G2jR8NDyGzEQDTWrNA5Lm';
 
 export interface RaydiumPoolData {
@@ -55,13 +55,13 @@ export const getRaydiumPoolData = async (poolId: string): Promise<RaydiumPoolDat
   }
 };
 
-// Get 369 Eternal token price and stats
+// Get Vortex369 Talisman token price and stats
 export const get369EternalStats = async (): Promise<Token369Stats> => {
   try {
     const poolData = await getRaydiumPoolData(TOKEN_369_POOL_ID);
     
     if (!poolData) {
-      throw new Error('Failed to fetch 369 Eternal pool data');
+      throw new Error('Failed to fetch Vortex369 Talisman pool data');
     }
     
     return {
@@ -73,7 +73,7 @@ export const get369EternalStats = async (): Promise<Token369Stats> => {
       poolId: TOKEN_369_POOL_ID,
     };
   } catch (error: any) {
-    console.error('Error getting 369 Eternal stats:', error.message);
+    console.error('Error getting Vortex369 Talisman stats:', error.message);
     
     // Return default values if API fails
     return {
@@ -93,7 +93,7 @@ export const get369EternalPrice = async (): Promise<number> => {
     const stats = await get369EternalStats();
     return stats.price;
   } catch (error) {
-    console.error('Error getting 369 Eternal price:', error);
+    console.error('Error getting Vortex369 Talisman price:', error);
     return 0;
   }
 };
