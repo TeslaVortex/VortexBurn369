@@ -8,6 +8,8 @@ import BurnTracker from '../components/BurnTracker';
 import ChartsPanel from '../components/ChartsPanel';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Token369Card from '../components/Token369Card';
+import WeeklyBurnScheduler from '../components/WeeklyBurnScheduler';
 import { getStoredWallets } from '../services/walletManager';
 import { getTotalExpenses } from '../services/expenseTracker';
 import { getTotalBurned } from '../services/burnService';
@@ -116,6 +118,9 @@ function Dashboard({ darkMode, toggleDarkMode }: DashboardProps) {
               </div>
             </div>
 
+            {/* 369 Eternal Token Card */}
+            <Token369Card balance={0} onRefresh={refreshStats} />
+
             {/* Expense Manager */}
             <ExpenseManager />
 
@@ -124,6 +129,9 @@ function Dashboard({ darkMode, toggleDarkMode }: DashboardProps) {
 
             {/* Burn Tracker */}
             <BurnTracker />
+
+            {/* Weekly Burn Scheduler */}
+            <WeeklyBurnScheduler />
 
             {/* Swap Card */}
             <SwapCard />

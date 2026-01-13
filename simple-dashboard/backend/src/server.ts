@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { getXaiTip, getBudgetTip } from './services/xai';
 import { getCryptoPrice, getMultiplePrices, getExchangeRates } from './services/coinbase';
+import { get369EternalStats, get369EternalPrice } from './services/raydium';
+import { getSolanaWalletInfo } from './services/solana';
 
 dotenv.config();
 
@@ -76,6 +78,40 @@ app.get('/api/coinbase/rates', async (req, res) => {
   } catch (error) {
     console.error('Error fetching rates:', error);
     res.status(500).json({ status: 'error', message: 'Failed to fetch rates' });
+  }
+});
+
+// Raydium - 369 Eternal token stats
+app.get('/api/raydium/369-eternal', async (req, res) => {
+  try {
+    const stats = await get369EternalStats();
+    res.json({ status: 'ok', stats });
+  } catch (error) {
+    console.error('Error fetching 369 Eternal stats:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch 369 Eternal stats' });
+  }
+});
+
+// Raydium - 369 Eternal price only
+app.get('/api/raydium/369-eternal/price', async (req, res) => {
+  try {
+    const price = await get369EternalPrice();
+    res.json({ status: 'ok', price });
+  } catch (error) {
+    console.error('Error fetching 369 Eternal price:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch price' });
+  }
+});
+
+// Solana - Get wallet info
+app.get('/api/solana/wallet/:address', async (req, res) => {
+  try {
+    const { address } = req.params;
+    const walletInfo = await getSolanaWalletInfo(address);
+    res.json({ status: 'ok', wallet: walletInfo });
+  } catch (error) {
+    console.error('Error fetching Solana wallet info:', error);
+    res.status(500).json({ status: 'error', message: 'Failed to fetch wallet info' });
   }
 });
 
