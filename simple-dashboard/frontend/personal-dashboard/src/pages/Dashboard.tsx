@@ -10,6 +10,7 @@ import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Token369Card from '../components/Token369Card';
 import WeeklyBurnScheduler from '../components/WeeklyBurnScheduler';
+import SimpleNote from '../components/SimpleNote';
 import { getStoredWallets } from '../services/walletManager';
 import { getTotalExpenses } from '../services/expenseTracker';
 import { getTotalBurned } from '../services/burnService';
@@ -132,6 +133,9 @@ function Dashboard({ darkMode, toggleDarkMode }: DashboardProps) {
 
             {/* Weekly Burn Scheduler */}
             <WeeklyBurnScheduler />
+
+            {/* Simple 5-Node Notes */}
+            <SimpleNote />
 
             {/* Swap Card */}
             <SwapCard />
