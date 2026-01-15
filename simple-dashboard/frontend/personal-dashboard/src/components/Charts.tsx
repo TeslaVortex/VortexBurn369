@@ -36,6 +36,7 @@ export const EXPENSE_CATEGORIES = {
   utilities: { label: 'Utilities ⚡', color: '#4BC0C0' },
   shopping: { label: 'Shopping 🛒', color: '#9966FF' },
   crypto: { label: 'Crypto 💎', color: '#FF9F40' },
+  'service-ripple': { label: 'Service Ripple 💝', color: '#FF69B4' },
   other: { label: 'Other 📦', color: '#C9CBCF' },
 };
 

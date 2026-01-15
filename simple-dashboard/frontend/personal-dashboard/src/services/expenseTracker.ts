@@ -26,6 +26,7 @@ export const CATEGORIES = [
   { id: 'utilities', label: 'Utilities ⚡', icon: '⚡' },
   { id: 'shopping', label: 'Shopping 🛒', icon: '🛒' },
   { id: 'crypto', label: 'Crypto/Gas 💎', icon: '💎' },
+  { id: 'service-ripple', label: 'Service Ripple Budget 💝', icon: '💝' },
   { id: 'other', label: 'Other 📦', icon: '📦' },
 ];
 
